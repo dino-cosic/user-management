@@ -19,7 +19,6 @@
     <ProjectReference Include="..\UserManagement.Core\UserManagement.Core\UserManagement.Core.csproj" />
     <ProjectReference Include="..\UserManagement.Core\UserManagement.Models\UserManagement.Models.csproj" />
     <ProjectReference Include="..\UserManagement.Data\UserManagement.EF\UserManagement.EF.csproj" />
-    <ProjectReference Include="..\UserManagement.EF\UserManagement.EF.csproj" />
   </ItemGroup>
 
 </Project>
