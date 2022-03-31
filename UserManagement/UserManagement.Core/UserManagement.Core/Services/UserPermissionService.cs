@@ -27,11 +27,6 @@ namespace UserManagement.Core.Services
         {
             var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(userId);
 
-            if (userPermissions == null || !userPermissions.Any())
-            {
-                throw new DataNotFoundException("User Permission", nameof(userId), userId);
-            }
-
             return userPermissions.Select(up => _mapper.Map<Permission>(up)).ToList();
         }
 

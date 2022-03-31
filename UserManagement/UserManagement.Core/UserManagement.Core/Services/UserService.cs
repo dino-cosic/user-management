@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.Core.Exceptions;
 using UserManagement.Core.Interfaces;
 using UserManagement.DAL.Interfaces;
 using UserManagement.Models;
+using UserManagement.Models.Requests;
+using UserManagement.Models.Responses;
 
 namespace UserManagement.Core.Services
 {
@@ -33,7 +33,7 @@ namespace UserManagement.Core.Services
             return _mapper.Map<User>(newUser);
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<PagedListResponse<User>> GetAllAsync(UserPageParameters userPageParameters)
         {
             var dbUsers = await _userRepository.GetAllAsync();
 
@@ -42,7 +42,10 @@ namespace UserManagement.Core.Services
                 throw new DataNotFoundException();
             }
 
-            return dbUsers.Select(u => _mapper.Map<User>(u)).ToList();
+            return PagedListResponse<User>.ToPagedListResponse(
+                dbUsers.Select(u => _mapper.Map<User>(u)).ToList(),
+                userPageParameters.PageNumber,
+                userPageParameters.PageSize);
         }
 
         public async Task<User> GetAsync(int id)

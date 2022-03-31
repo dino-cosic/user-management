@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserManagement.Core.Guards;
 using UserManagement.Core.Interfaces;
 using UserManagement.Models;
+using UserManagement.Models.Requests;
 using UserManagement.Models.Responses;
 
 namespace UserManagement.API.Controllers
@@ -34,9 +36,20 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<ActionResult<IEnumerable<User>>> GetAll([FromQuery] UserPageParameters userPageParameters)
         {
-            var users = await _userService.GetAllAsync();
+            var users = await _userService.GetAllAsync(userPageParameters);
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(
+                new
+                {
+                    users.TotalCount,
+                    users.PageSize,
+                    users.CurrentPage,
+                    users.TotalPages,
+                    users.HasNext,
+                    users.HasPrevious
+                }));
 
             return new OkObjectResult(new UserManagementResponse<IEnumerable<User>>
             {

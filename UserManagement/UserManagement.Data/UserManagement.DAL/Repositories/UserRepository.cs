@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.DAL.Interfaces;
 using UserManagement.EF;
@@ -15,7 +16,7 @@ namespace UserManagement.DAL.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await GetAll().ToListAsync();
+            return await GetAll().OrderBy(u => u.Id).ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int id)
