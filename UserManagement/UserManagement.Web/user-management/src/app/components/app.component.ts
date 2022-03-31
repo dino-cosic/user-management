@@ -4,23 +4,39 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public forecasts?: WeatherForecast[];
+  public response?: UserManagementResponse;
 
   constructor(http: HttpClient) {
-    http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+    http
+      .get<UserManagementResponse>(
+        'https://localhost:44338/User?PageNumber=1&PageSize=5'
+      )
+      .subscribe(
+        (result) => {
+          this.response = result;
+        },
+        (error) => console.error(error)
+      );
   }
 
   title = 'user-management';
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+interface UserManagementResponse {
+  succes: boolean;
+  errorMessage: string;
+  data: any;
+}
+
+interface User {
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: number;
+  password: string;
+  status: number;
+  username: number;
 }

@@ -28,6 +28,11 @@ namespace UserManagement.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            }));
+
             services.AddAutoMapper(typeof(Startup), typeof(UserProfile), typeof(PermissionProfile));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -57,6 +62,8 @@ namespace UserManagement.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserManagement v1"));
             }
+
+            app.UseCors("ApiCorsPolicy");
 
             app.UseHttpsRedirection();
 
