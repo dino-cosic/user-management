@@ -40,6 +40,6 @@ User stories that need to be covered are given below:
 - **Assign Permission** page should allow to add or remove permissions for the selected user and call
   appropriate API
   
- Tech stack:
- ![image](https://user-images.githubusercontent.com/102690675/161164978-8b8ccfb4-404a-499f-b32a-5ddcefdf7078.png)
+ Tech stack:<br/>
+ ![image](https://user-images.githubusercontent.com/102690675/161164978-8b8ccfb4-404a-499f-b32a-5ddcefdf7078.png)<br/>
 ![image](https://user-images.githubusercontent.com/102690675/161165011-1ab56843-9754-4ca0-9ce4-17f5375de23f.png)
