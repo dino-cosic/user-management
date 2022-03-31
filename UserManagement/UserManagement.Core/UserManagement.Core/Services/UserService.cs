@@ -39,20 +39,10 @@ namespace UserManagement.Core.Services
 
             if (dbUsers == null || !dbUsers.Any())
             {
-                throw new Exception("No users found.");
+                throw new UserNotFoundException();
             }
 
-            var listaKuraca = new List<User>();
-
-            foreach (var user in dbUsers)
-            {
-                var kurac = _mapper.Map<User>(user);
-                listaKuraca.Add(kurac);
-            }
-
-            return listaKuraca;
-
-            //return dbUsers.Select(u => _mapper.Map<User>(u)).ToList();
+            return dbUsers.Select(u => _mapper.Map<User>(u)).ToList();
         }
 
         public async Task<User> GetAsync(int id)

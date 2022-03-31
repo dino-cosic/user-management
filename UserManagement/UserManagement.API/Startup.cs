@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UserManagement.Core.Helpers;
 using UserManagement.Core.Interfaces;
 using UserManagement.Core.Profiles;
 using UserManagement.Core.Services;
@@ -56,6 +57,9 @@ namespace UserManagement.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // global exception handler
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseAuthorization();
 
