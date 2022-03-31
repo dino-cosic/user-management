@@ -4,6 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UserManagement.Core.Interfaces;
+using UserManagement.Core.Services;
+using UserManagement.DAL;
+using UserManagement.DAL.Interfaces;
+using UserManagement.DAL.Repositories;
+using UserManagement.EF;
 
 namespace UserManagement.API
 {
@@ -19,12 +25,20 @@ namespace UserManagement.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserManagement", Version = "v1" });
             });
+
+            services.AddDbContext<UserManagementDbContext>();  
+            
+            // Repositories
+            services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            // Services
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
