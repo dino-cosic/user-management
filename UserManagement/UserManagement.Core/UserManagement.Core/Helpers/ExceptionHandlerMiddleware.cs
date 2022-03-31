@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using UserManagement.Core.Exceptions;
 using UserManagement.Models;
-using UserManagement.Models.CustomResponses;
+using UserManagement.Models.Responses;
 
 namespace UserManagement.Core.Helpers
 {
@@ -32,12 +32,13 @@ namespace UserManagement.Core.Helpers
                 switch (error)
                 {
                     case UserInvalidDataException e:
-                        // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case DataNotFoundException e:
-                        // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    case PermissionAlreadyAssignedException e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:
                         // unhandled error

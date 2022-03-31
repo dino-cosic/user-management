@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using UserManagement.Core.Guards;
 using UserManagement.Core.Interfaces;
 using UserManagement.Models;
-using UserManagement.Models.CustomResponses;
+using UserManagement.Models.Requests;
+using UserManagement.Models.Responses;
 
 namespace UserManagement.API.Controllers
 {
@@ -31,6 +32,19 @@ namespace UserManagement.API.Controllers
             {
                 Success = true,
                 Data = userPermissions
+            });
+        }
+
+        [HttpPost("AssignToUser")]
+        public async Task<ActionResult> AssignPermissionToUser([FromBody] AssignPermissionRequest assignPermissionRequest)
+        {
+            UserGuard.ParameterNotNull(assignPermissionRequest, nameof(assignPermissionRequest));
+
+            await _userPermissionService.AssignNewPermissionAsync(assignPermissionRequest);
+
+            return new OkObjectResult(new UserManagementResponse<Permission>
+            {
+                Success = true
             });
         }
     }

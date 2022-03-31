@@ -6,7 +6,7 @@ namespace UserManagement.Core.Exceptions
     {
         public DataNotFoundException() : base() { }
 
-        public DataNotFoundException(string resource, string paramName, int userId) : base($"No data was found in the database for {resource} with {paramName}: {userId}")
+        public DataNotFoundException(string resource, string paramName, int id) : base($"No data was found in the database for {resource} with {paramName}: {id}")
         {
         }
     }

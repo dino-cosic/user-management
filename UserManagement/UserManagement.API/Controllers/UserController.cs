@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UserManagement.Core.Guards;
 using UserManagement.Core.Interfaces;
 using UserManagement.Models;
-using UserManagement.Models.CustomResponses;
+using UserManagement.Models.Responses;
 
 namespace UserManagement.API.Controllers
 {
@@ -80,7 +80,10 @@ namespace UserManagement.API.Controllers
 
             await _userService.DeleteAsync(id);
 
-            return new OkResult();
+            return new OkObjectResult(new UserManagementResponse<User>
+            {
+                Success = true
+            });
         }
     }
 }

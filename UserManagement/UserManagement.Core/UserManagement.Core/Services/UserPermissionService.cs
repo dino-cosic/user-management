@@ -6,6 +6,7 @@ using UserManagement.Core.Exceptions;
 using UserManagement.Core.Interfaces;
 using UserManagement.DAL.Interfaces;
 using UserManagement.Models;
+using UserManagement.Models.Requests;
 
 namespace UserManagement.Core.Services
 {
@@ -34,15 +35,31 @@ namespace UserManagement.Core.Services
             return userPermissions.Select(up => _mapper.Map<Permission>(up)).ToList();
         }
 
-        public async Task<Permission> UpdateUserPermissions(Permission permission)
+        public async Task AssignNewPermissionAsync(AssignPermissionRequest assignPermissionRequest)
         {
-            // validate business rules
+            // confirm that provided permission is not already assigned to the user
 
-            var permissionEntity = _mapper.Map<EF.Entities.Permission>(permission);
+            var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(assignPermissionRequest.UserId);
 
-            var updatedPermission = await _permissionRepository.UpdateAsync(permissionEntity);
+            if (userPermissions.Any(up => up.Id == assignPermissionRequest.PermissionId && up.Code == assignPermissionRequest.PermissionCode))
+            {
+                throw new PermissionAlreadyAssignedException(assignPermissionRequest.PermissionCode);
+            }
 
-            return _mapper.Map<Permission>(updatedPermission);
+            var providedPermission = await _permissionRepository.GetByIdAsync(assignPermissionRequest.PermissionId);
+
+            if (providedPermission == null)
+            {
+                throw new DataNotFoundException("Permission", nameof(assignPermissionRequest.PermissionId), assignPermissionRequest.PermissionId);
+            }
+
+            var userPermissionEntity = new EF.Entities.UserPermission
+            {
+                UserId = assignPermissionRequest.UserId,
+                PermissionId = assignPermissionRequest.PermissionId,
+            };
+
+            await _userPermissionRepository.AddAsync(userPermissionEntity);
         }
     }
 }

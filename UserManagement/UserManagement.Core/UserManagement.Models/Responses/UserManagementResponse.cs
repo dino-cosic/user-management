@@ -1,4 +1,4 @@
-﻿namespace UserManagement.Models.CustomResponses
+﻿namespace UserManagement.Models.Responses
 {
     public class UserManagementResponse<T>
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserManagement.Models;
+using UserManagement.Models.Requests;
 
 namespace UserManagement.Core.Interfaces
 {
@@ -14,10 +15,10 @@ namespace UserManagement.Core.Interfaces
         Task<IEnumerable<Permission>> GetUserPermissions(int userId);
 
         /// <summary>
-        /// Method is used for updating permission
+        /// Method is used for adding new permission to the user.
         /// </summary>
-        /// <param name="permission"></param>
+        /// <param name="assignPermissionRequest"></param>
         /// <returns></returns>
-        Task<Permission> UpdateUserPermissions(Permission permission);
+        Task AssignNewPermissionAsync(AssignPermissionRequest assignPermissionRequest);
     }
 }
