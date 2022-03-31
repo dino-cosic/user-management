@@ -8,18 +8,18 @@ namespace UserManagement.DAL
         where DbContext : Microsoft.EntityFrameworkCore.DbContext
         where TEntity : class, new()
     {
-        protected readonly DbContext UserManagementContext;
+        protected readonly DbContext DatabaseContext;
 
-        public Repository(DbContext userManagementContext)
+        public Repository(DbContext databaseContext)
         {
-            UserManagementContext = userManagementContext;
+            DatabaseContext = databaseContext;
         }
 
         public IQueryable<TEntity> GetAll()
         {
             try
             {
-                return UserManagementContext.Set<TEntity>();
+                return DatabaseContext.Set<TEntity>();
             }
             catch (Exception ex)
             {
@@ -36,8 +36,8 @@ namespace UserManagement.DAL
 
             try
             {
-                await UserManagementContext.AddAsync(entity);
-                await UserManagementContext.SaveChangesAsync();
+                await DatabaseContext.AddAsync(entity);
+                await DatabaseContext.SaveChangesAsync();
 
                 return entity;
             }
@@ -56,8 +56,8 @@ namespace UserManagement.DAL
 
             try
             {
-                UserManagementContext.Update(entity);
-                await UserManagementContext.SaveChangesAsync();
+                DatabaseContext.Update(entity);
+                await DatabaseContext.SaveChangesAsync();
 
                 return entity;
             }
@@ -76,8 +76,8 @@ namespace UserManagement.DAL
 
             try
             {
-                UserManagementContext.Remove(entity);
-                await UserManagementContext.SaveChangesAsync();
+                DatabaseContext.Remove(entity);
+                await DatabaseContext.SaveChangesAsync();
 
                 return entity;
             }

@@ -11,7 +11,6 @@ namespace UserManagement.DAL.Repositories
     {
         public UserRepository(UserManagementDbContext userManagementContext) : base(userManagementContext)
         {
-
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()

@@ -39,7 +39,7 @@ namespace UserManagement.Core.Services
 
             if (dbUsers == null || !dbUsers.Any())
             {
-                throw new UserNotFoundException();
+                throw new DataNotFoundException();
             }
 
             return dbUsers.Select(u => _mapper.Map<User>(u)).ToList();
@@ -53,7 +53,7 @@ namespace UserManagement.Core.Services
 
             if (userEntity == null)
             {
-                throw new UserNotFoundException(id);
+                throw new DataNotFoundException(id);
             }
 
             return _mapper.Map<User>(userEntity);
@@ -83,7 +83,7 @@ namespace UserManagement.Core.Services
 
             if (userEntity == null)
             {
-                throw new UserNotFoundException(id);
+                throw new DataNotFoundException(id);
             }
 
             await _userRepository.DeleteAsync(userEntity);

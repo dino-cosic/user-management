@@ -6,10 +6,10 @@ namespace UserManagement.Core.Profiles
     {
         public UserProfile()
         {
-            // DTO to Entity
+            // To Entity
             CreateMap<Models.User, EF.Entities.User>();
 
-            // Entity to DTO
+            // From Entity
             CreateMap<EF.Entities.User, Models.User>();
         }
     }

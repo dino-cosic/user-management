@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UserManagement.Core.Guards;
 using UserManagement.Core.Interfaces;
 using UserManagement.Models;
+using UserManagement.Models.CustomResponses;
 
 namespace UserManagement.API.Controllers
 {

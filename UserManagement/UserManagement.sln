@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserManagement.Core", "User
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserManagement.Core", "UserManagement.Core", "{CA85D31A-D834-45BE-B5EE-DDA2B4105C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.Models", "UserManagement.Core\UserManagement.Models\UserManagement.Models.csproj", "{A3E1DC53-5D19-48F3-B2D3-AA0594A90BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserManagement.Models", "UserManagement.Core\UserManagement.Models\UserManagement.Models.csproj", "{A3E1DC53-5D19-48F3-B2D3-AA0594A90BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

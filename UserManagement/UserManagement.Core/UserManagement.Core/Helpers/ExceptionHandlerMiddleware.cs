@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using UserManagement.Core.Exceptions;
 using UserManagement.Models;
+using UserManagement.Models.CustomResponses;
 
 namespace UserManagement.Core.Helpers
 {
@@ -34,7 +35,7 @@ namespace UserManagement.Core.Helpers
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
-                    case UserNotFoundException e:
+                    case DataNotFoundException e:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;

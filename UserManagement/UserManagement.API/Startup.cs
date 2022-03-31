@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using UserManagement.Core.Helpers;
 using UserManagement.Core.Interfaces;
+using UserManagement.Core.MappingProfiles;
 using UserManagement.Core.Profiles;
 using UserManagement.Core.Services;
 using UserManagement.DAL;
@@ -27,7 +28,7 @@ namespace UserManagement.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup), typeof(UserProfile));
+            services.AddAutoMapper(typeof(Startup), typeof(UserProfile), typeof(PermissionProfile));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -39,9 +40,12 @@ namespace UserManagement.API
             // Repositories
             services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IPermissionRepository, PermissionRepository>();
+            services.AddTransient<IUserPermissionRepository, UserPermissionRepository>();
 
             // Services
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserPermissionService, UserPermissionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
