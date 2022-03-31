@@ -5,4 +5,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UserManagement.EF\UserManagement.EF.csproj" />
+  </ItemGroup>
+
 </Project>
