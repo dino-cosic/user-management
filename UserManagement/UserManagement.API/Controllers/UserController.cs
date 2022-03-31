@@ -11,7 +11,6 @@ namespace UserManagement.API.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)
@@ -20,9 +19,13 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<ActionResult<User>> Create([FromBody] User user)
         {
-            throw new NotImplementedException();
+            // Guard against invalid user object
+
+            var newUser = await _userService.CreateAsync(user);
+
+            return new OkObjectResult(newUser);
         }
 
         [HttpGet]
@@ -36,19 +39,29 @@ namespace UserManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            throw new NotImplementedException();
+            // Guard against invalid user id
+
+            return await _userService.GetAsync(id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<ActionResult<User>> Update([FromBody] User user)
         {
-            throw new NotImplementedException();
+            // Guard against invalid user object
+
+            var updatedUser = await _userService.UpdateAsync(user);
+
+            return new OkObjectResult(updatedUser);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            // Guard against invalid user id
+
+            await _userService.DeleteAsync(id);
+
+            return new OkResult();
         }
     }
 }

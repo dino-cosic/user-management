@@ -14,12 +14,12 @@ namespace UserManagement.DAL.Repositories
 
         }
 
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await GetAll().ToListAsync();
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
             return await GetAll().FirstOrDefaultAsync(u => u.Id == id);
         }

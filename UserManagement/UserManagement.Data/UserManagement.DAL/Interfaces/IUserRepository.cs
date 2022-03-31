@@ -11,13 +11,13 @@ namespace UserManagement.DAL.Interfaces
         /// Method is used for retrieving all users from database.
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<User>> Get();
+        Task<IEnumerable<User>> GetAllAsync();
 
         /// <summary>
         /// Method is used to retrieve specific user fromd database by id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<User> GetById(int id);
+        Task<User> GetByIdAsync(int id);
     }
 }

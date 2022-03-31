@@ -6,10 +6,10 @@ namespace UserManagement.Core.Interfaces
 {
     public interface IUserService
     {
-        Task CreateAsync(User user);
+        Task<User> CreateAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> GetAsync(int id);
-        Task UpdateAsync(User user);
+        Task<User> UpdateAsync(User user);
         Task DeleteAsync(int id);
     }
 }

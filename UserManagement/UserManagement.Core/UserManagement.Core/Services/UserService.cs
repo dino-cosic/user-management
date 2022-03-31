@@ -1,62 +1,102 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UserManagement.Core.Exceptions;
 using UserManagement.Core.Interfaces;
 using UserManagement.DAL.Interfaces;
 using UserManagement.Models;
-using UserManagement.Models.Enums;
 
 namespace UserManagement.Core.Services
 {
     public class UserService : IUserService
     {
+        private readonly IMapper _mapper;
+
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public async Task CreateAsync(User user)
+        public async Task<User> CreateAsync(User user)
         {
-            throw new NotImplementedException();
+            // validate business rules
+
+            var userEntity = _mapper.Map<EF.Entities.User>(user);
+
+            var newUser = await _userRepository.AddAsync(userEntity);
+
+            return _mapper.Map<User>(newUser);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var dbUsers = await _userRepository.Get();
+            var dbUsers = await _userRepository.GetAllAsync();
 
             if (dbUsers == null || !dbUsers.Any())
             {
                 throw new Exception("No users found.");
             }
 
-            return dbUsers.Select(x => new User
+            var listaKuraca = new List<User>();
+
+            foreach (var user in dbUsers)
             {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Email = x.Email,
-                Username = x.Username,
-                Password = x.Password,
-                Status = (Status)(int)x.Status
-            }).ToList();
+                var kurac = _mapper.Map<User>(user);
+                listaKuraca.Add(kurac);
+            }
+
+            return listaKuraca;
+
+            //return dbUsers.Select(u => _mapper.Map<User>(u)).ToList();
         }
 
         public async Task<User> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            // validate business rules
+
+            var userEntity = await _userRepository.GetByIdAsync(id);
+
+            if (userEntity == null)
+            {
+                throw new UserNotFoundException(id);
+            }
+
+            return _mapper.Map<User>(userEntity);
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
-            throw new NotImplementedException();
+            // validate business rules
+
+            var userEntity = await _userRepository.GetByIdAsync(user.Id);
+
+            userEntity.FirstName = user.FirstName;
+            userEntity.LastName = user.LastName;
+            userEntity.Email = user.Email;
+            userEntity.Username = user.Username;
+            userEntity.Password = user.Password;
+            userEntity.Status = (EF.Entities.Status)(int)user.Status;
+
+            var updatedUserEntity = await _userRepository.UpdateAsync(userEntity);
+
+            return _mapper.Map<User>(updatedUserEntity);
         }
 
         public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var userEntity = await _userRepository.GetByIdAsync(id);
+
+            if (userEntity == null)
+            {
+                throw new UserNotFoundException(id);
+            }
+
+            await _userRepository.DeleteAsync(userEntity);
         }
     }
 }
