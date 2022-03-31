@@ -9,7 +9,7 @@ using UserManagement.Models;
 
 namespace UserManagement.Core.Services
 {
-    public class UserPermissionService: IUserPermissionService
+    public class UserPermissionService : IUserPermissionService
     {
         private readonly IUserPermissionRepository _userPermissionRepository;
         private readonly IPermissionRepository _permissionRepository;
@@ -28,7 +28,7 @@ namespace UserManagement.Core.Services
 
             if (userPermissions == null || !userPermissions.Any())
             {
-                throw new DataNotFoundException(userId);
+                throw new DataNotFoundException("User Permission", nameof(userId), userId);
             }
 
             return userPermissions.Select(up => _mapper.Map<Permission>(up)).ToList();

@@ -53,7 +53,7 @@ namespace UserManagement.Core.Services
 
             if (userEntity == null)
             {
-                throw new DataNotFoundException(id);
+                throw new DataNotFoundException("Users", nameof(id), id);
             }
 
             return _mapper.Map<User>(userEntity);
@@ -83,7 +83,7 @@ namespace UserManagement.Core.Services
 
             if (userEntity == null)
             {
-                throw new DataNotFoundException(id);
+                throw new DataNotFoundException("Users", nameof(id), id);
             }
 
             await _userRepository.DeleteAsync(userEntity);
