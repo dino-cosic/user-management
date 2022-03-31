@@ -4,7 +4,7 @@ namespace UserManagement.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class UserManagementController : ControllerBase
     {
         
     }
