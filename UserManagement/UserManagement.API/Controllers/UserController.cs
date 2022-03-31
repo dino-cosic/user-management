@@ -36,9 +36,9 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll([FromQuery] UserPageParameters userPageParameters)
+        public async Task<ActionResult<IEnumerable<User>>> GetAll([FromQuery] UserPagingParameters userPagingParameters)
         {
-            var users = await _userService.GetAllAsync(userPageParameters);
+            var users = await _userService.GetAllAsync(userPagingParameters);
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(
                 new

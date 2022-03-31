@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.Models.Requests
 {
-    public class UserPageParameters
+    public abstract class BasicPagingParameters
     {
         const int MaxPageSize = 50;
 

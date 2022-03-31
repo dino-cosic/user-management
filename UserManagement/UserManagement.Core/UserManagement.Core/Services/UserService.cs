@@ -33,7 +33,7 @@ namespace UserManagement.Core.Services
             return _mapper.Map<User>(newUser);
         }
 
-        public async Task<PagedListResponse<User>> GetAllAsync(UserPageParameters userPageParameters)
+        public async Task<PagedListResponse<User>> GetAllAsync(UserPagingParameters userPagingParameters)
         {
             var dbUsers = await _userRepository.GetAllAsync();
 
@@ -44,8 +44,8 @@ namespace UserManagement.Core.Services
 
             return PagedListResponse<User>.ToPagedListResponse(
                 dbUsers.Select(u => _mapper.Map<User>(u)).ToList(),
-                userPageParameters.PageNumber,
-                userPageParameters.PageSize);
+                userPagingParameters.PageNumber,
+                userPagingParameters.PageSize);
         }
 
         public async Task<User> GetAsync(int id)

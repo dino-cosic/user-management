@@ -8,7 +8,7 @@ namespace UserManagement.Core.Interfaces
     public interface IUserService
     {
         Task<User> CreateAsync(User user);
-        Task<PagedListResponse<User>> GetAllAsync(UserPageParameters userPageParameters);
+        Task<PagedListResponse<User>> GetAllAsync(UserPagingParameters userPagingParameters);
         Task<User> GetAsync(int id);
         Task<User> UpdateAsync(User user);
         Task DeleteAsync(int id);
