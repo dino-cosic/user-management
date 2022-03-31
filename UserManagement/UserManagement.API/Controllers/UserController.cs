@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UserManagement.Core.Guards;
 using UserManagement.Core.Interfaces;
 using UserManagement.Models;
 
@@ -21,11 +21,15 @@ namespace UserManagement.API.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Create([FromBody] User user)
         {
-            // Guard against invalid user object
+            UserGuard.ParameterNotNull(user, nameof(user));
 
             var newUser = await _userService.CreateAsync(user);
 
-            return new OkObjectResult(newUser);
+            return new OkObjectResult(new UserManagementResponse<User>
+            {
+                Success = true,
+                Data = newUser
+            });
         }
 
         [HttpGet]
@@ -33,31 +37,45 @@ namespace UserManagement.API.Controllers
         {
             var users = await _userService.GetAllAsync();
 
-            return new OkObjectResult(users);
+            return new OkObjectResult(new UserManagementResponse<IEnumerable<User>>
+            {
+                Success = true,
+                Data = users
+            });
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            // Guard against invalid user id
+            UserGuard.IdParameterValid(id, nameof(id));
 
-            return await _userService.GetAsync(id);
+            var user = await _userService.GetAsync(id);
+
+            return new OkObjectResult(new UserManagementResponse<User>
+            {
+                Success = true,
+                Data = user
+            });
         }
 
         [HttpPut]
         public async Task<ActionResult<User>> Update([FromBody] User user)
         {
-            // Guard against invalid user object
+            UserGuard.ParameterNotNull(user, nameof(user));
 
             var updatedUser = await _userService.UpdateAsync(user);
 
-            return new OkObjectResult(updatedUser);
+            return new OkObjectResult(new UserManagementResponse<User>
+            {
+                Success = true,
+                Data = updatedUser
+            });
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // Guard against invalid user id
+            UserGuard.IdParameterValid(id, nameof(id));
 
             await _userService.DeleteAsync(id);
 

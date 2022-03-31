@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using UserManagement.Core.Exceptions;
+using UserManagement.Models;
 
 namespace UserManagement.Core.Helpers
 {
@@ -43,7 +44,12 @@ namespace UserManagement.Core.Helpers
                         break;
                 }
 
-                var result = JsonConvert.SerializeObject(new { message = error?.Message });
+                var result = JsonConvert.SerializeObject(new UserManagementResponse<User>
+                {
+                    Success = false,
+                    ErrorMessage = error.Message,
+                });
+
                 await response.WriteAsync(result);
             }
         }
