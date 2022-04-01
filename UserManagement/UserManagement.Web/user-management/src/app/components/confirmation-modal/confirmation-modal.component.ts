@@ -1,33 +1,18 @@
-import { Component, ComponentRef } from '@angular/core';
-import {
-  IModalDialog,
-  IModalDialogButton,
-  IModalDialogOptions,
-} from 'ngx-modal-dialog';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
   styleUrls: ['./confirmation-modal.component.css'],
 })
-export class ConfirmationModalComponent implements IModalDialog {
-  actionButtons: IModalDialogButton[];
-
-  constructor() {
-    this.actionButtons = [
-      { buttonClass: 'btn btn-secondary', text: 'Cancel' },
-      { buttonClass: 'btn btn-danger', text: 'Delete', onAction: () => true },
-    ];
-  }
+export class ConfirmationModalComponent {
+  constructor(private modalService: NgbActiveModal) {}
 
   onSave() {
-    console.log('Save click');
+    this.modalService.close('save');
   }
-
-  dialogInit(
-    reference: ComponentRef<IModalDialog>,
-    options: Partial<IModalDialogOptions<any>>
-  ) {
-    // no processing needed
+  onClose() {
+    this.modalService.close();
   }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalDialogService } from 'ngx-modal-dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Status } from 'src/app/models/enums/status.enum';
 import { PagingData } from 'src/app/models/pagingData.model';
@@ -17,8 +17,7 @@ export class UserTableComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private modalService: ModalDialogService,
-    private viewRef: ViewContainerRef,
+    private modalService: NgbModal,
     private toastr: ToastrService
   ) {}
 
@@ -37,27 +36,24 @@ export class UserTableComponent implements OnInit {
   }
 
   openModal(id: number) {
-    this.modalService.openDialog(this.viewRef, {
-      title: 'Warning',
-      data: id,
-      onClose: () => this.deleteUser(id),
-      childComponent: ConfirmationModalComponent,
-    });
-  }
-
-  deleteUser(id: number): boolean {
-    this.userService.deleteUser(id).subscribe(
-      (res) => {
-        this.toastr.success(
-          'The user was deleted successfully.',
-          'User Deleted'
+    this.modalService.open(ConfirmationModalComponent).result.then((result) => {
+      if (result === 'save') {
+        this.userService.deleteUser(id).subscribe(
+          (res) => {
+            this.toastr.success(
+              'The user was deleted successfully.',
+              'User Deleted'
+            );
+            this.ngOnInit();
+          },
+          (err) => {
+            this.toastr.warning('User was not deleted.', 'Warning');
+          }
         );
-      },
-      (err) => {
-        this.toastr.warning('User was not deleted.', 'Warning');
+      } else {
+        this.modalService.dismissAll();
       }
-    );
-    return true;
+    });
   }
 
   onNextClick() {
