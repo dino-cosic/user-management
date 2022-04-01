@@ -32,10 +32,9 @@ namespace UserManagement.Core.Services
 
         public async Task AssignNewPermissionAsync(UpdatePermissionRequest updatePermissionRequest)
         {
-            // confirm that provided permission is not already assigned to the user
-
             var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(updatePermissionRequest.UserId);
 
+            // confirm that provided permission is not already assigned to the user
             if (userPermissions.Any(up => up.Id == updatePermissionRequest.PermissionId && up.Code == updatePermissionRequest.PermissionCode))
             {
                 throw new PermissionAlreadyAssignedException(updatePermissionRequest.PermissionCode);

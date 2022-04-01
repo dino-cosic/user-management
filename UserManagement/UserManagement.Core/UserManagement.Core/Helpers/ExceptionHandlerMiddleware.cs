@@ -34,6 +34,9 @@ namespace UserManagement.Core.Helpers
                     case InvalidDataException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case BusinessDataValidationException e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
                     case DataNotFoundException e:
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;

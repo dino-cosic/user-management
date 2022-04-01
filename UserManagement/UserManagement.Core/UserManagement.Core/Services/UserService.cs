@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.Core.Exceptions;
 using UserManagement.Core.Interfaces;
+using UserManagement.Core.Validators;
 using UserManagement.DAL.Interfaces;
 using UserManagement.Models;
 using UserManagement.Models.Requests;
@@ -24,7 +25,7 @@ namespace UserManagement.Core.Services
 
         public async Task<User> CreateAsync(User user)
         {
-            // validate business rules
+            UserDataValidator.ValidateUserData(user);
 
             var userEntity = _mapper.Map<EF.Entities.User>(user);
 
@@ -64,7 +65,7 @@ namespace UserManagement.Core.Services
 
         public async Task<User> UpdateAsync(User user)
         {
-            // validate business rules
+            UserDataValidator.ValidateUserData(user);
 
             var userEntity = await _userRepository.GetByIdAsync(user.Id);
 
