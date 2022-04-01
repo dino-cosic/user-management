@@ -31,7 +31,7 @@ namespace UserManagement.Core.Helpers
 
                 switch (error)
                 {
-                    case UserInvalidDataException e:
+                    case InvalidDataException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case DataNotFoundException e:

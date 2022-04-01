@@ -6,12 +6,12 @@ namespace UserManagement.Core.Guards
     {
         public static void ParameterNotNull(object parameter, string paramaterName)
         {
-            if (parameter == null) throw new UserInvalidDataException();
+            if (parameter == null) throw new InvalidDataException(paramaterName);
         }
 
         public static void IdParameterValid(int id, string parameterName)
         {
-            if (id <= 0) throw new UserInvalidDataException();
+            if (id <= 0) throw new InvalidDataException(parameterName);
         }
     }
 }
