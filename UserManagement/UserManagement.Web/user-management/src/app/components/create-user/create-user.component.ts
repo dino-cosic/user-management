@@ -64,7 +64,9 @@ export class CreateUserComponent implements OnInit {
             confirmPassword: password,
           });
         },
-        (err) => {}
+        (err) => {
+          this.toastr.warning('Could not retrieve user.', 'Warning');
+        }
       );
     }
   }
@@ -102,7 +104,7 @@ export class CreateUserComponent implements OnInit {
         );
       },
       (err) => {
-        console.log(err);
+        this.toastr.warning('Could not create user.', 'Warning');
       }
     );
   }
@@ -118,7 +120,7 @@ export class CreateUserComponent implements OnInit {
         );
       },
       (err) => {
-        console.log(err);
+        this.toastr.warning('Could not update user.', 'Warning');
       }
     );
   }

@@ -31,7 +31,9 @@ export class UserTableComponent implements OnInit {
         this.users = res.body.data;
         this.pagingData = this.userService.pagingData;
       },
-      (err) => {}
+      (err) => {
+        this.toastr.warning('Could not retrieve users.', 'Warning');
+      }
     );
   }
 
@@ -65,7 +67,9 @@ export class UserTableComponent implements OnInit {
           this.users = res.body.data;
           this.pagingData = this.userService.pagingData;
         },
-        (err) => {}
+        (err) => {
+          this.toastr.warning('Could not retrieve users.', 'Warning');
+        }
       );
   }
 
@@ -78,7 +82,9 @@ export class UserTableComponent implements OnInit {
           this.users = res.body.data;
           this.pagingData = this.userService.pagingData;
         },
-        (err) => {}
+        (err) => {
+          this.toastr.warning('Could not retrieve users.', 'Warning');
+        }
       );
   }
 
