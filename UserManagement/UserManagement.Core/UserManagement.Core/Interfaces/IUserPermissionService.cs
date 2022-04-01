@@ -8,6 +8,12 @@ namespace UserManagement.Core.Interfaces
     public interface IUserPermissionService
     {
         /// <summary>
+        /// Method is used to retrieve all configured permissions.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Permission>> GetPermissionsAsync();
+
+        /// <summary>
         /// Method is used to retrieve all permissions assigned to user.
         /// </summary>
         /// <param name="userId"></param>

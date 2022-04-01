@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,13 @@ namespace UserManagement.Core.Services
             _permissionRepository = permissionRepository;
             _userPermissionRepository = userPermissionRepository;
             _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<Permission>> GetPermissionsAsync()
+        {
+            var dbPermissions = await _permissionRepository.GetAll().ToListAsync();
+
+            return dbPermissions.Select(p => _mapper.Map<Permission>(p)).ToList();
         }
 
         public async Task<IEnumerable<Permission>> GetUserPermissions(int userId)

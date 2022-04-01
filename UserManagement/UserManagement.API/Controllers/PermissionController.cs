@@ -21,6 +21,18 @@ namespace UserManagement.API.Controllers
             _userPermissionService = userPermissionService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Permission>>> GetAll()
+        {
+            var permissions = await _userPermissionService.GetPermissionsAsync();
+
+            return new OkObjectResult(new UserManagementResponse<IEnumerable<Permission>>
+            {
+                Success = true,
+                Data = permissions
+            });
+        }
+
         [HttpGet("User/{userId}")]
         public async Task<ActionResult<IEnumerable<Permission>>> GetUserPermissions(int userId)
         {
@@ -48,8 +60,8 @@ namespace UserManagement.API.Controllers
             });
         }
 
-        [HttpDelete("RemoveFromUser")]
-        public async Task<ActionResult> RemovePermissionFromUser([FromBody]UpdatePermissionRequest updatePermissionRequest)
+        [HttpPut("RemoveFromUser")]
+        public async Task<ActionResult> RemovePermissionFromUser([FromBody] UpdatePermissionRequest updatePermissionRequest)
         {
             UserGuard.ParameterNotNull(updatePermissionRequest, nameof(updatePermissionRequest));
 
