@@ -21,6 +21,10 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "user-management", "UserMana
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserManagement.Web", "UserManagement.Web", "{D1E762D7-37D9-4AC3-8188-450FFA281BD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.Infrastructure", "UserManagement.Infrastructure\UserManagement.Infrastructure\UserManagement.Infrastructure.csproj", "{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserManagement.Infrastructure", "UserManagement.Infrastructure", "{F668F438-B4AA-4C7A-8E6F-CEF53883E445}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,10 @@ Global
 		{1D096DA2-5D9B-406D-B1F6-D8FEDBCD2F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D096DA2-5D9B-406D-B1F6-D8FEDBCD2F22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D096DA2-5D9B-406D-B1F6-D8FEDBCD2F22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{91FF07D6-103C-4EFA-A0A1-D4EF236CB371} = {CA85D31A-D834-45BE-B5EE-DDA2B4105C35}
 		{A3E1DC53-5D19-48F3-B2D3-AA0594A90BC4} = {CA85D31A-D834-45BE-B5EE-DDA2B4105C35}
 		{1D096DA2-5D9B-406D-B1F6-D8FEDBCD2F22} = {D1E762D7-37D9-4AC3-8188-450FFA281BD0}
+		{5D0AF87F-E65D-4D5B-885E-FB2E7E48B3B5} = {F668F438-B4AA-4C7A-8E6F-CEF53883E445}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {336A63A4-3895-481D-99F6-A34AD279AF19}
