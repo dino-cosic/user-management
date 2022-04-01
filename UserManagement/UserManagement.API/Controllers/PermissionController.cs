@@ -48,11 +48,11 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("AssignToUser")]
-        public async Task<ActionResult> AssignPermissionToUser([FromBody] UpdatePermissionRequest updatePermissionRequest)
+        public async Task<ActionResult> AssignPermissionToUser([FromBody] AssignPermissionsRequest updatePermissionRequest)
         {
             UserGuard.ParameterNotNull(updatePermissionRequest, nameof(updatePermissionRequest));
 
-            await _userPermissionService.AssignNewPermissionAsync(updatePermissionRequest);
+            await _userPermissionService.AssignNewPermissionsAsync(updatePermissionRequest);
 
             return new OkObjectResult(new UserManagementResponse<Permission>
             {
@@ -61,11 +61,11 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPut("RemoveFromUser")]
-        public async Task<ActionResult> RemovePermissionFromUser([FromBody] UpdatePermissionRequest updatePermissionRequest)
+        public async Task<ActionResult> RemovePermissionFromUser([FromBody] RemovePermissionRequest removePermissionRequest)
         {
-            UserGuard.ParameterNotNull(updatePermissionRequest, nameof(updatePermissionRequest));
+            UserGuard.ParameterNotNull(removePermissionRequest, nameof(removePermissionRequest));
 
-            await _userPermissionService.RemovePermissionFromUserAsync(updatePermissionRequest);
+            await _userPermissionService.RemovePermissionFromUserAsync(removePermissionRequest.PermissionId, removePermissionRequest.UserId);
 
             return new OkObjectResult(new UserManagementResponse<Permission>
             {

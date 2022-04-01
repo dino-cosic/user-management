@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RemovePermissionRequest } from '../models/remove-permission-request.model';
 import { UpdatePermission } from '../models/updatePermission.model';
 import { UserManagementResponse } from '../models/userManagementResponse.model';
 
@@ -18,8 +19,12 @@ export class PermissionService {
     );
   }
 
-  public getUserPermissions(userId: number) {
-    return this.httpClient.get(`${this.apiURL}/Permission/User/${userId}`);
+  public getUserPermissions(
+    userId: number
+  ): Observable<UserManagementResponse> {
+    return this.httpClient.get<UserManagementResponse>(
+      `${this.apiURL}/Permission/User/${userId}`
+    );
   }
 
   public assignPermissionToUser(updatePermission: UpdatePermission) {
@@ -29,7 +34,7 @@ export class PermissionService {
     );
   }
 
-  public removePerimssionFromUser(updatePermission: UpdatePermission) {
+  public removePerimssionFromUser(updatePermission: RemovePermissionRequest) {
     return this.httpClient.put(
       `${this.apiURL}/Permission/RemoveFromUser`,
       updatePermission

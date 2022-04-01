@@ -1,5 +1,4 @@
 export interface UpdatePermission {
-  permissionId: number;
+  permissionIds: number[];
   userId: number;
-  permissionCode: string;
 }

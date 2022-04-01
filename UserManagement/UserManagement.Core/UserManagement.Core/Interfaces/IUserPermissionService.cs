@@ -25,13 +25,14 @@ namespace UserManagement.Core.Interfaces
         /// </summary>
         /// <param name="assignPermissionRequest"></param>
         /// <returns></returns>
-        Task AssignNewPermissionAsync(UpdatePermissionRequest assignPermissionRequest);
+        Task AssignNewPermissionsAsync(AssignPermissionsRequest assignPermissionRequest);
 
         /// <summary>
         /// Method is used for removing permission from an user.
         /// </summary>
-        /// <param name="permissionRequest"></param>
+        /// <param name="permissionId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task RemovePermissionFromUserAsync(UpdatePermissionRequest permissionRequest);
+        Task RemovePermissionFromUserAsync(int permissionId, int userId);
     }
 }

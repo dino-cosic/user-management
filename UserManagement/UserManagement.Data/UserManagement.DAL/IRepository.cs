@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace UserManagement.DAL
@@ -10,6 +11,8 @@ namespace UserManagement.DAL
         IQueryable<TEntity> GetAll();
 
         Task<TEntity> AddAsync(TEntity entity);
+
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         Task<TEntity> UpdateAsync(TEntity entity);
 

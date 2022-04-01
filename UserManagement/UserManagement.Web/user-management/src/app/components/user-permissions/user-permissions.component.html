@@ -1,28 +1,68 @@
-<h4>Permissions</h4>
+<div class="container">
+  <h3>Permissions</h3>
 
-<div *ngIf="configuredPermissions" class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Code</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tr>
-      <th scope="row">1</th>
-      <td>Read</td>
-      <td>Otto</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Write</td>
-      <td>Thornton</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Admin</td>
-      <td>the Bird</td>
-    </tr>
-  </table>
+  <div *ngIf="configuredPermissions" class="row">
+    <div class="col-xl-5">
+      <h4>User assigned permissions</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Code</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let permission of userPermissions">
+          <th scope="row">{{ permission.id }}</th>
+          <td>{{ permission.code }}</td>
+          <td>{{ permission.description }}</td>
+          <td>
+            <a
+              class="delete cursor-pointer"
+              title="Remove permission"
+              data-toggle="tooltip"
+              ><i
+                (click)="deletePermission(permission.id)"
+                class="material-icons"
+                >&#xE5C9;</i
+              ></a
+            >
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xl-2"></div>
+    <div class="col-xl-5">
+      <h4>System Permissions</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Code</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let permission of configuredPermissions">
+          <th scope="row">
+            <input
+              type="checkbox"
+              value="permission.code"
+              [id]="permission.id"
+              (click)="checked()"
+            />
+          </th>
+          <td>{{ permission.code }}</td>
+          <td>{{ permission.description }}</td>
+        </tr>
+      </table>
+      <button
+        class="btn btn-primary"
+        (click)="applyPermissions()"
+        [disabled]="isButtonDisabled"
+      >
+        Add permissions
+      </button>
+    </div>
+  </div>
 </div>

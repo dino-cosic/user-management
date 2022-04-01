@@ -1,0 +1,11 @@
+.table-w {
+  width: 50%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+table.table td a.delete {
+  color: #F44336;
+}
