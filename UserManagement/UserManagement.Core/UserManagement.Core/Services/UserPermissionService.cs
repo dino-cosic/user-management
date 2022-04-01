@@ -30,31 +30,46 @@ namespace UserManagement.Core.Services
             return userPermissions.Select(up => _mapper.Map<Permission>(up)).ToList();
         }
 
-        public async Task AssignNewPermissionAsync(AssignPermissionRequest assignPermissionRequest)
+        public async Task AssignNewPermissionAsync(UpdatePermissionRequest updatePermissionRequest)
         {
             // confirm that provided permission is not already assigned to the user
 
-            var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(assignPermissionRequest.UserId);
+            var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(updatePermissionRequest.UserId);
 
-            if (userPermissions.Any(up => up.Id == assignPermissionRequest.PermissionId && up.Code == assignPermissionRequest.PermissionCode))
+            if (userPermissions.Any(up => up.Id == updatePermissionRequest.PermissionId && up.Code == updatePermissionRequest.PermissionCode))
             {
-                throw new PermissionAlreadyAssignedException(assignPermissionRequest.PermissionCode);
+                throw new PermissionAlreadyAssignedException(updatePermissionRequest.PermissionCode);
             }
 
-            var providedPermission = await _permissionRepository.GetByIdAsync(assignPermissionRequest.PermissionId);
+            var providedPermission = await _permissionRepository.GetByIdAsync(updatePermissionRequest.PermissionId);
 
             if (providedPermission == null)
             {
-                throw new DataNotFoundException("Permission", nameof(assignPermissionRequest.PermissionId), assignPermissionRequest.PermissionId);
+                throw new DataNotFoundException("Permission", nameof(updatePermissionRequest.PermissionId), updatePermissionRequest.PermissionId);
             }
 
             var userPermissionEntity = new EF.Entities.UserPermission
             {
-                UserId = assignPermissionRequest.UserId,
-                PermissionId = assignPermissionRequest.PermissionId,
+                UserId = updatePermissionRequest.UserId,
+                PermissionId = updatePermissionRequest.PermissionId,
             };
 
             await _userPermissionRepository.AddAsync(userPermissionEntity);
+        }
+
+        public async Task RemovePermissionFromUserAsync(UpdatePermissionRequest updatePermissionRequest)
+        {
+            var userPermissions = await _userPermissionRepository.GetUserPermissionsAsync(updatePermissionRequest.UserId);
+
+            var permissionToRemove = userPermissions.FirstOrDefault(up => up.Id == updatePermissionRequest.PermissionId && up.Code == updatePermissionRequest.PermissionCode);
+
+            // if permission is not assigned to the user return not found/bad request
+            if (permissionToRemove == null)
+            {
+                throw new DataNotFoundException("UserPermission", nameof(updatePermissionRequest.PermissionId), updatePermissionRequest.PermissionId);
+            }
+
+            await _userPermissionRepository.DeleteByPermissionIdAsync(permissionToRemove.Id);
         }
     }
 }

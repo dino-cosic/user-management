@@ -36,11 +36,24 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("AssignToUser")]
-        public async Task<ActionResult> AssignPermissionToUser([FromBody] AssignPermissionRequest assignPermissionRequest)
+        public async Task<ActionResult> AssignPermissionToUser([FromBody] UpdatePermissionRequest updatePermissionRequest)
         {
-            UserGuard.ParameterNotNull(assignPermissionRequest, nameof(assignPermissionRequest));
+            UserGuard.ParameterNotNull(updatePermissionRequest, nameof(updatePermissionRequest));
 
-            await _userPermissionService.AssignNewPermissionAsync(assignPermissionRequest);
+            await _userPermissionService.AssignNewPermissionAsync(updatePermissionRequest);
+
+            return new OkObjectResult(new UserManagementResponse<Permission>
+            {
+                Success = true
+            });
+        }
+
+        [HttpDelete("RemoveFromUser")]
+        public async Task<ActionResult> RemovePermissionFromUser([FromBody]UpdatePermissionRequest updatePermissionRequest)
+        {
+            UserGuard.ParameterNotNull(updatePermissionRequest, nameof(updatePermissionRequest));
+
+            await _userPermissionService.RemovePermissionFromUserAsync(updatePermissionRequest);
 
             return new OkObjectResult(new UserManagementResponse<Permission>
             {

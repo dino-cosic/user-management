@@ -22,5 +22,12 @@ namespace UserManagement.DAL.Repositories
                 await userPermissions.Select(up => up.Permission).ToListAsync() :
                 Enumerable.Empty<Permission>();
         }
+
+        public async Task DeleteByPermissionIdAsync(int permissionId)
+        {
+            var userPermission = GetAll().FirstOrDefault(up => up.PermissionId == permissionId);
+
+            await DeleteAsync(userPermission);
+        }
     }
 }

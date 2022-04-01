@@ -13,5 +13,12 @@ namespace UserManagement.DAL.Interfaces
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<IEnumerable<Permission>> GetUserPermissionsAsync(int userId);
+        
+        /// <summary>
+        /// Method is used to delete relation between user and permission in UserPermissions table.
+        /// </summary>
+        /// <param name="permissionId"></param>
+        /// <returns></returns>
+        Task DeleteByPermissionIdAsync(int permissionId);
     }
 }

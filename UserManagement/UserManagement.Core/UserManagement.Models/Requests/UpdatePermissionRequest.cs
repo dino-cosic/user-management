@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.Models.Requests
 {
-    public class AssignPermissionRequest
+    public class UpdatePermissionRequest
     {
         public int PermissionId { get; set; }
 
