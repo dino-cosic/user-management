@@ -5,7 +5,9 @@
     (ngSubmit)="onSubmit()"
     class="text-center border border-light p-5 user-form"
   >
-    <p class="h4 mb-4 form-title">{{ !isEdit ? "Add User" : "Edit User" }}</p>
+    <p class="h4 mb-4 form-title">
+      {{ userId > 0 ? "Add User" : "Edit User" }}
+    </p>
     <!-- First name -->
     <input
       formControlName="firstName"

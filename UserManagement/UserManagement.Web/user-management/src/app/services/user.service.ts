@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { UserManagementResponse } from '../models/userManagementResponse.model';
 export class UserService {
   apiURL: string = 'https://localhost:44338';
 
-  pagingData = {} as PagingData;
+  pagingData: PagingData;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -34,11 +34,14 @@ export class UserService {
     );
   }
 
-  public getUsers(pageNumber?: number, pageSize?: number) {
+  public getUsers(
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<HttpResponse<UserManagementResponse>> {
     if (pageNumber && pageSize) {
       return this.httpClient
         .get<UserManagementResponse>(
-          `${this.apiURL}/User?PageNumber${pageNumber}&PageSize${pageSize}`,
+          `${this.apiURL}/User?PageNumber=${pageNumber}&PageSize=${pageSize}`,
           { observe: 'response' }
         )
         .pipe(
@@ -50,7 +53,7 @@ export class UserService {
 
     return this.httpClient
       .get<UserManagementResponse>(
-        `${this.apiURL}/User?PageNumber1&PageSize=10`,
+        `${this.apiURL}/User?PageNumber=1&PageSize=5`,
         { observe: 'response' }
       )
       .pipe(

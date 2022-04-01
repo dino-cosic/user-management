@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -13,14 +14,18 @@ import { MustMatch } from 'src/app/validators/mustMatch.validator';
 export class CreateUserComponent implements OnInit {
   userForm: FormGroup;
   submitted = false;
-  isEdit = false;
-  editUserId: number = 0;
+  userId: number = 0;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.route.paramMap.subscribe(
+      (paramMap) => (this.userId = Number(paramMap.get('userId')))
+    );
+  }
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group(
@@ -45,8 +50,8 @@ export class CreateUserComponent implements OnInit {
       }
     );
 
-    if (this.isEdit && this.editUserId > 0) {
-      this.userService.getUserById(this.editUserId).subscribe(
+    if (this.userId > 0) {
+      this.userService.getUserById(this.userId).subscribe(
         (res) => {
           const { firstName, lastName, email, username, password } = res.data;
 
@@ -79,7 +84,7 @@ export class CreateUserComponent implements OnInit {
 
     let user = new User(this.userForm.value);
 
-    if (!this.isEdit && this.editUserId === 0) {
+    if (this.userId === 0) {
       this.callCreate(user);
     } else {
       this.callUpdate(user);
@@ -103,7 +108,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   callUpdate(user: User) {
-    user.id = this.editUserId;
+    user.id = this.userId;
 
     this.userService.updateUser(user).subscribe(
       (res) => {
