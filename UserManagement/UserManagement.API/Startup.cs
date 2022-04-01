@@ -30,7 +30,10 @@ namespace UserManagement.API
         {
             services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                builder.WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination");
             }));
 
             services.AddAutoMapper(typeof(Startup), typeof(UserProfile), typeof(PermissionProfile));

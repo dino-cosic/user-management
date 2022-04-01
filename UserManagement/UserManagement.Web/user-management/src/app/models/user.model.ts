@@ -1,5 +1,11 @@
-export interface UserManagementResponse {
-  succes: boolean;
-  errorMessage: string;
-  data: any;
+import { Status } from './enums/status.enum';
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: number;
+  email: string;
+  username: number;
+  password: string;
+  status: Status;
 }

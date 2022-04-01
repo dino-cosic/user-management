@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { UserManagementResponse } from '../models/userManagementResponse.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,36 +9,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public response?: UserManagementResponse;
+  public response?: HttpResponse<UserManagementResponse>;
 
-  constructor(http: HttpClient) {
-    http
-      .get<UserManagementResponse>(
-        'https://localhost:44338/User?PageNumber=1&PageSize=5'
+  constructor(private userService: UserService) {
+    this.userService
+      .getUsers(
+        this.userService.pagingData.currentPage,
+        this.userService.pagingData.pageSize
       )
       .subscribe(
         (result) => {
-          this.response = result;
+          console.log('Response' + result);
         },
-        (error) => console.error(error)
+        (error) => {
+          console.log(error);
+        }
       );
   }
 
   title = 'user-management';
-}
-
-interface UserManagementResponse {
-  succes: boolean;
-  errorMessage: string;
-  data: any;
-}
-
-interface User {
-  email: string;
-  firstName: string;
-  id: number;
-  lastName: number;
-  password: string;
-  status: number;
-  username: number;
 }
