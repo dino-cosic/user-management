@@ -1,18 +1,17 @@
 <div class="container">
-  <!-- Default form register -->
   <form
     [formGroup]="userForm"
     (ngSubmit)="onSubmit()"
     class="text-center border border-light p-5 user-form"
   >
-    <p class="h4 mb-4 form-title">
-      {{ userId === 0 ? "Add User" : "Edit User" }}
-    </p>
+    <h2 class="create-edit-title">
+      <b>{{ userId === 0 ? "Add User" : "Edit User" }}</b>
+    </h2>
     <!-- First name -->
     <input
       formControlName="firstName"
       type="text"
-      class="form-control mb-4"
+      class="form-control"
       placeholder="First name"
       [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
     />
@@ -23,7 +22,7 @@
     <input
       formControlName="lastName"
       type="text"
-      class="form-control mb-4"
+      class="form-control"
       placeholder="Last name"
       [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
     />
@@ -34,7 +33,7 @@
     <input
       formControlName="email"
       type="email"
-      class="form-control mb-4"
+      class="form-control"
       placeholder="E-mail"
       [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
     />
@@ -48,7 +47,7 @@
     <input
       formControlName="username"
       type="text"
-      class="form-control mb-4"
+      class="form-control"
       placeholder="Username"
       [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
     />
@@ -62,7 +61,7 @@
     <input
       formControlName="password"
       type="password"
-      class="form-control mb 4"
+      class="form-control"
       placeholder="Password"
       [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
     />
@@ -73,13 +72,6 @@
         lowercase letter. Symbols are allowed.
       </div>
     </div>
-    <small
-      id="defaultRegisterFormPasswordHelpBlock"
-      class="form-text text-muted mb-4"
-    >
-      Password must have at least 8 characters with 1 digit, 1 uppercase letter
-      and 1 lowercase letter. Symbols are allowed
-    </small>
     <!-- Confirm Password -->
     <input
       formControlName="confirmPassword"
@@ -88,15 +80,21 @@
       placeholder="Confirm Password"
       [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
     />
+    <small
+      id="defaultRegisterFormPasswordHelpBlock"
+      class="form-text text-muted"
+    >
+      Password must have at least 8 characters with 1 digit, 1 uppercase letter
+      and 1 lowercase letter. Symbols are allowed
+    </small>
     <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
       <div *ngIf="f.confirmPassword.errors.required">
         Confirm Password is required
       </div>
       <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
     </div>
-    <!-- Default form register -->
     <div>
-      <button class="btn btn-primary mr-1">Submit</button>
+      <button class="btn btn-primary mr-2">Submit</button>
       <button class="btn btn-secondary" type="reset" (click)="onReset()">
         Reset
       </button>

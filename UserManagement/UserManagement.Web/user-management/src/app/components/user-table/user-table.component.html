@@ -82,10 +82,12 @@
 
         <ul class="pagination">
           <li *ngIf="pagingData?.HasPrevious" class="page-item">
-            <a class="page-link" (click)="onPreviousClick()">Previous</a>
+            <a class="page-link cursor-pointer" (click)="onPreviousClick()"
+              >Previous</a
+            >
           </li>
           <li *ngIf="pagingData?.HasNext" class="page-item">
-            <a class="page-link" (click)="onNextClick()">Next</a>
+            <a class="page-link cursor-pointer" (click)="onNextClick()">Next</a>
           </li>
         </ul>
       </div>
