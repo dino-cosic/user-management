@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/operators';
 import { PagingData } from '../models/pagingData.model';
 import { User } from '../models/user.model';
@@ -27,8 +28,10 @@ export class UserService {
     return this.httpClient.delete(`${this.apiURL}/User/${id}`);
   }
 
-  public getUserById(id: number) {
-    return this.httpClient.get(`${this.apiURL}/User/${id}`);
+  public getUserById(id: number): Observable<UserManagementResponse> {
+    return this.httpClient.get<UserManagementResponse>(
+      `${this.apiURL}/User/${id}`
+    );
   }
 
   public getUsers(pageNumber?: number, pageSize?: number) {

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 import { MustMatch } from 'src/app/validators/mustMatch.validator';
 
 @Component({
@@ -10,8 +13,14 @@ import { MustMatch } from 'src/app/validators/mustMatch.validator';
 export class CreateUserComponent implements OnInit {
   userForm: FormGroup;
   submitted = false;
+  isEdit = false;
+  editUserId: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group(
@@ -35,6 +44,24 @@ export class CreateUserComponent implements OnInit {
         validator: MustMatch('password', 'confirmPassword'),
       }
     );
+
+    if (this.isEdit && this.editUserId > 0) {
+      this.userService.getUserById(this.editUserId).subscribe(
+        (res) => {
+          const { firstName, lastName, email, username, password } = res.data;
+
+          this.userForm.patchValue({
+            firstName,
+            lastName,
+            email,
+            username,
+            password,
+            confirmPassword: password,
+          });
+        },
+        (err) => {}
+      );
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -50,8 +77,45 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    // display form values on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value, null, 4));
+    let user = new User(this.userForm.value);
+
+    if (!this.isEdit && this.editUserId === 0) {
+      this.callCreate(user);
+    } else {
+      this.callUpdate(user);
+    }
+
+    this.onReset();
+  }
+
+  callCreate(user: User) {
+    this.userService.createUser(user).subscribe(
+      (res) => {
+        this.toastr.success(
+          'The user was created successfully.',
+          'User Created'
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  callUpdate(user: User) {
+    user.id = this.editUserId;
+
+    this.userService.updateUser(user).subscribe(
+      (res) => {
+        this.toastr.success(
+          'The user data was updated successfully.',
+          'User Updated'
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onReset() {
