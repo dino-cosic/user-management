@@ -54,6 +54,7 @@ namespace UserManagement.API
             // Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserPermissionService, UserPermissionService>();
+            services.AddScoped<ISortHelper<EF.Entities.User>, SortHelper<EF.Entities.User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

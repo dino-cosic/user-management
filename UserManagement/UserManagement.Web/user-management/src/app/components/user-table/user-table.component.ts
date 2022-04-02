@@ -88,6 +88,24 @@ export class UserTableComponent implements OnInit {
       );
   }
 
+  onColHeaderClick(queryParamName: string) {
+    this.userService
+      .getUsers(
+        this.pagingData.CurrentPage,
+        this.pagingData.PageSize,
+        queryParamName
+      )
+      .subscribe(
+        (res) => {
+          this.users = res.body.data;
+          this.pagingData = this.userService.pagingData;
+        },
+        (err) => {
+          this.toastr.warning('Could not retrieve users.', 'Warning');
+        }
+      );
+  }
+
   navigateToEditUser(id: number) {
     this.router.navigate(['/edit-user', id]);
   }

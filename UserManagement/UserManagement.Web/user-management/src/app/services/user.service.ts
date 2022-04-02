@@ -36,12 +36,15 @@ export class UserService {
 
   public getUsers(
     pageNumber?: number,
-    pageSize?: number
+    pageSize?: number,
+    orderByParam?: string
   ): Observable<HttpResponse<UserManagementResponse>> {
+    if (!orderByParam) orderByParam = 'id';
+
     if (pageNumber && pageSize) {
       return this.httpClient
         .get<UserManagementResponse>(
-          `${this.apiURL}/User?PageNumber=${pageNumber}&PageSize=${pageSize}`,
+          `${this.apiURL}/User?PageNumber=${pageNumber}&PageSize=${pageSize}&orderBy=${orderByParam}`,
           { observe: 'response' }
         )
         .pipe(
@@ -53,7 +56,7 @@ export class UserService {
 
     return this.httpClient
       .get<UserManagementResponse>(
-        `${this.apiURL}/User?PageNumber=1&PageSize=5`,
+        `${this.apiURL}/User?PageNumber=1&PageSize=10&orderBy=${orderByParam}`,
         { observe: 'response' }
       )
       .pipe(

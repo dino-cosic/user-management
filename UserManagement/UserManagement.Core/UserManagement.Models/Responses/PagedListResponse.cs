@@ -27,6 +27,7 @@ namespace UserManagement.Models.Responses
         public static PagedListResponse<T> ToPagedListResponse(IEnumerable<T> source, int pageNumber, int pageSize)
         {
             var count = source.Count();
+
             var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
             return new PagedListResponse<T>(items, count, pageNumber, pageSize);
